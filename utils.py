@@ -4,11 +4,13 @@ from bs4 import BeautifulSoup as BS
 
 class Scientist:
     def __init__(self, name):
+        #self.name = input('Please input the name of the scientist: ')
         self.name = name
-        self.dblp_url = 'https://dblp.org/search?q='+name+'&h=1000&f=0&c=1000'
+        new_name = self.name.replace(' ', '+')
+        self.dblp_url = 'https://dblp.org/search?q='+new_name+'&h=1000&f=0&c=1000'
         print(self.dblp_url)
     # get the scientist's articles list
-    def get_articlelist(self):
+    def get_scientist_link(self):
         response = requests.get(self.dblp_url)
         soup = BS(response.text, 'html.parser')
         articlelist = []
@@ -23,5 +25,24 @@ class Scientist:
                     span_tag = a_tag.find("span", itemprop="name")
                     if span_tag:
                         name = span_tag.text
-                        print(href, name)
+                        if name==self.name:
+                            print(href, name)
+                            return href
+                        
+    def get_articlelist(self,link):
+        response = requests.get(link)
+        soup = BS(response.text, 'html.parser')
+        articlelist = []
+        title_spans = soup.select('span.title[itemprop="name"]')
+
+        for title_span in title_spans:
+            title = title_span.text
+            print(title)
+            next_a = title_span.find_next_sibling('a')
+            if next_a is not None:
+                href = next_a.get('href')
+                print(href)
+                articlelist.append({'title': title, 'href': href})
+        return articlelist
+
         

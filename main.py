@@ -1,6 +1,9 @@
 from utils import *
 
 if __name__ == '__main__':
-    name = 'Ya-qin+Zhang'
+    name = 'Ya-qin Zhang'
     scientist = Scientist(name)
-    scientist.get_articlelist()
+    link = scientist.get_scientist_link()
+    result = scientist.get_articlelist(link)
+    print(result)
+    
