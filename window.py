@@ -53,12 +53,13 @@ class MainWindow(QWidget):
         scientist = Scientist(name)
         link = scientist.get_scientist_link()
         results = scientist.get_articlelist(link)
+        self.textedit.clear()
         self.show_results(results)
 
     def show_results(self, results):
         # Add text to the text box
         for item in results:
-            self.textedit.append('<a >{}</a> ({})'.format(item['title'], item['link']))
+            self.textedit.append('<a >{}</a> <br/> (<a href="{}">{}</a>)'.format(item['title'], item['link'], item['link']))
 
         # Slide
         self.scrollbar.setValue(self.scrollbar.maximum())
