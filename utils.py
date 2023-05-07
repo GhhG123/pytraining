@@ -29,12 +29,14 @@ class Scientist:
                             print(href, name)
                             return href
                         
+    #get the article list
     def get_articlelist(self,link):
         response = requests.get(link)
         soup = BS(response.text, 'html.parser')
         articlelist = []
         title_spans = soup.select('span.title[itemprop="name"]')
 
+        # 
         for title_span in title_spans:
             title = title_span.text
             print(title)
@@ -42,7 +44,7 @@ class Scientist:
             if next_a is not None:
                 href = next_a.get('href')
                 print(href)
-                articlelist.append({'title': title, 'href': href})
+                articlelist.append({'title': title, 'link': href})
         return articlelist
 
         

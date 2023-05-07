@@ -1,9 +1,10 @@
 from utils import *
+from window import *
+import sys
 
 if __name__ == '__main__':
-    name = 'Ya-qin Zhang'
-    scientist = Scientist(name)
-    link = scientist.get_scientist_link()
-    result = scientist.get_articlelist(link)
-    print(result)
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
     
